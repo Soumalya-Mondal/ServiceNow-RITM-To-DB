@@ -71,58 +71,58 @@ def fetch_ticket_details(snow_url: str, username: str, password: str, fetch_offs
 
     # calling ServiceNow API:S05
     try:
-        incident_ticket_data_response = requests.get(snow_api_url, auth = snow_credential, headers = snow_headers, params = snow_params, verify = False)
+        ritm_ticket_data_response = requests.get(snow_api_url, auth = snow_credential, headers = snow_headers, params = snow_params, verify = False)
         # check the response status code
-        if (int(incident_ticket_data_response.status_code) == 200):
-            incident_ticket_result = incident_ticket_data_response.json().get('result', [])
+        if (int(ritm_ticket_data_response.status_code) == 200):
+            ritm_ticket_result = ritm_ticket_data_response.json().get('result', [])
             # if there is no result
-            if (incident_ticket_result):
+            if (ritm_ticket_result):
                 # loop through all the ticket details
-                for ticket_item in incident_ticket_result:
+                for ticket_item in ritm_ticket_result:
                     ticket_record = (
-                        sanitize_value(get_display_value(ticket_item, "sys_class_name")), # ticket_type
-                        sanitize_value(get_display_value(ticket_item, "company")), # company
-                        sanitize_value(get_display_value(ticket_item, "sys_id")), # sys_id
-                        sanitize_value(get_display_value(ticket_item, "number")), # number
-                        sanitize_value(get_display_value(ticket_item, "sys_created_by")), # created_by
-                        parse_snow_datetime(ticket_item.get('sys_created_on', {}).get('value')), #created_on (datetime)
-                        sanitize_value(get_display_value(ticket_item, "opened_by")), # opened_by
+                        sanitize_value(get_display_value(ticket_item, 'sys_class_name')), # ticket_type
+                        sanitize_value(get_display_value(ticket_item, 'company')), # company
+                        sanitize_value(get_display_value(ticket_item, 'sys_id')), # sys_id
+                        sanitize_value(get_display_value(ticket_item, 'number')), # number
+                        sanitize_value(get_display_value(ticket_item, 'sys_created_by')), # created_by
+                        parse_snow_datetime(ticket_item.get('sys_created_on', {}).get('value')), #created_on
+                        sanitize_value(get_display_value(ticket_item, 'opened_by')), # opened_by
                         parse_snow_datetime(ticket_item.get('opened_at', {}).get('value')), #opened_at
-                        sanitize_value(get_display_value(ticket_item, "cmdb_ci")), # configuration_item
-                        sanitize_value(get_display_value(ticket_item, "u_tenant_category")), # category
-                        sanitize_value(get_display_value(ticket_item, "u_tenant_subcategory")), # subcategory
-                        sanitize_value(get_display_value(ticket_item, "priority")), # priority
-                        sanitize_value(get_display_value(ticket_item, "impact")), # impact
-                        sanitize_value(get_display_value(ticket_item, "urgency")), # urgency
-                        sanitize_value(get_display_value(ticket_item, "severity")), # severity
-                        sanitize_value(get_display_value(ticket_item, "state")), # state
-                        sanitize_value(get_display_value(ticket_item, "incident_state")), # incident_state
-                        sanitize_value(get_display_value(ticket_item, "assignment_group")), # assignment_group
-                        sanitize_value(get_display_value(ticket_item, "assigned_to")), # assigned_to
-                        sanitize_value(get_display_value(ticket_item, "parent_incident")), # parent_incident
-                        sanitize_value(get_display_value(ticket_item, "u_business_process")), # business_process
-                        sanitize_value(get_display_value(ticket_item, "u_vendor")), # vendor
-                        sanitize_value(get_display_value(ticket_item, "u_environment")), # environment
-                        sanitize_value(get_display_value(ticket_item, "u_availability_group")), # availability_group
-                        sanitize_value(get_display_value(ticket_item, "short_description")), # short_description
-                        sanitize_value(get_display_value(ticket_item, "description")), # description
-                        sanitize_value(get_display_value(ticket_item, "resolved_by")), # resolved_by
-                        parse_snow_datetime(ticket_item.get('resolved_at', {}).get('value')), #resolved_at (datetime)
-                        sanitize_value(get_display_value(ticket_item, "close_code")), # close_code
-                        sanitize_value(get_display_value(ticket_item, "close_notes")), # close_notes
-                        sanitize_value(get_display_value(ticket_item, "work_notes")) # work_notes
+                        sanitize_value(get_display_value(ticket_item, 'requested_for')), # requested_for
+                        sanitize_value(get_display_value(ticket_item, 'u_tenant_category')), # category
+                        sanitize_value(get_display_value(ticket_item, 'u_tenant_subcategory')), # subcategory
+                        sanitize_value(get_display_value(ticket_item, 'priority')), # priority
+                        sanitize_value(get_display_value(ticket_item, 'impact')), # impact
+                        sanitize_value(get_display_value(ticket_item, 'urgency')), # urgency
+                        sanitize_value(get_display_value(ticket_item, 'quantity')), # quatity
+                        sanitize_value(get_display_value(ticket_item, 'state')), # state
+                        sanitize_value(get_display_value(ticket_item, 'price')), # price
+                        sanitize_value(get_display_value(ticket_item, 'recurring_price')), # recurring_price
+                        sanitize_value(get_display_value(ticket_item, 'assignment_group')), # assignment_group
+                        sanitize_value(get_display_value(ticket_item, 'assigned_to')), # assigned_to
+                        sanitize_value(get_display_value(ticket_item, 'made_sla')), # made_sla
+                        sanitize_value(get_display_value(ticket_item, 'approval')), # approval
+                        sanitize_value(get_display_value(ticket_item, 'billable')), # billable
+                        sanitize_value(get_display_value(ticket_item, 'cat_item')), # catalog_item
+                        sanitize_value(get_display_value(ticket_item, 'escalation')), # escalation
+                        sanitize_value(get_display_value(ticket_item, 'short_description')), # short_description
+                        sanitize_value(get_display_value(ticket_item, 'description')), # description
+                        sanitize_value(get_display_value(ticket_item, 'closed_by')), # closed_by
+                        parse_snow_datetime(ticket_item.get('closed_at', {}).get('value')), # closed_at
+                        sanitize_value(get_display_value(ticket_item, 'close_notes')), # close_notes
+                        sanitize_value(get_display_value(ticket_item, 'work_notes')) # work_notes
                     )
                     # check if "sys_id" and "number" are non-empty
                     if all([ticket_record[2] and ticket_record[2].strip(), ticket_record[3] and ticket_record[3].strip()]):
                         batch_ticket_records.append(ticket_record)
-                log_writer(file_name = 'Fetch-Ticket-Details', steps = '05', status = 'SUCCESS', message = f'Total: {len(batch_ticket_records)} Incident Ticket Details Fetched')
+                log_writer(file_name = 'Fetch-Ticket-Details', steps = '05', status = 'SUCCESS', message = f'Total: {len(batch_ticket_records)} RITM Ticket Details Fetched')
                 return {'status' : 'SUCCESS', 'message' : 'Ticket Details Fetched', 'ticket_details' : batch_ticket_records}
             else:
-                log_writer(file_name = 'Fetch-Ticket-Details', steps = '05', status = 'INFO', message = 'No New Incident Ticket Found In ServiceNow')
+                log_writer(file_name = 'Fetch-Ticket-Details', steps = '05', status = 'INFO', message = 'No New RITM Ticket Found In ServiceNow')
                 return {'status' : 'INFO', 'message' : 'No More Ticket Details Found In ServiceNow', 'ticket_details' : []}
         else:
-            log_writer(file_name = 'Fetch-Ticket-Details', steps = '05', status = 'ERROR', message = str(incident_ticket_data_response.text))
-            return {'status' : 'ERROR', 'message' : str(incident_ticket_data_response.text), 'ticket_details' : []}
+            log_writer(file_name = 'Fetch-Ticket-Details', steps = '05', status = 'ERROR', message = str(ritm_ticket_data_response.text))
+            return {'status' : 'ERROR', 'message' : str(ritm_ticket_data_response.text), 'ticket_details' : []}
     except Exception as error:
         log_writer(file_name = 'Fetch-Ticket-Details', steps = '05', status = 'ERROR', message = str(error))
         return {'status' : 'ERROR', 'message' : f'[Fetch-Ticket-Details:S05] - {str(error)}', 'ticket_details' : []}

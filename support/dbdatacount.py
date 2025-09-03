@@ -29,7 +29,7 @@ def db_data_count(db_name: str, username: str, password: str, db_host: str, db_p
         log_writer(file_name = 'DB-Data-Count', steps = '03', status = 'ERROR', message = str(error))
         return {'status' : 'ERROR', 'message' : f'[DB-Data-Count:S03] - {str(error)}', 'row_count' : 0}
 
-    # check if "incident_data" table present and fetch row count:S04
+    # check if "ritm_data" table present and fetch row count:S04
     try:
         with psycopg2.connect(**db_connection_parameter) as database_connection:  # type: ignore
             with database_connection.cursor() as database_cursor:
@@ -37,19 +37,19 @@ def db_data_count(db_name: str, username: str, password: str, db_host: str, db_p
                 SELECT EXISTS (
                     SELECT FROM information_schema.tables
                     WHERE table_schema = 'public'
-                    AND table_name = 'incident_data'
+                    AND table_name = 'ritm_data'
                 );''')
                 table_exists = database_cursor.fetchone()[0]
-                # check if "incident_data" table present
+                # check if "ritm_data" table present
                 if table_exists:
-                    # fetch row count from "incident_data" table
-                    database_cursor.execute('SELECT COUNT(*) FROM incident_data;')
+                    # fetch row count from "ritm_data" table
+                    database_cursor.execute('SELECT COUNT(*) FROM ritm_data;')
                     records_count = database_cursor.fetchone()[0]
-                    log_writer(file_name = 'DB-Data-Count', steps = '04', status = 'SUCCESS', message = f'Total {int(records_count)} Rows Count Fetched From "incident_data" Table')
-                    return {'status' : 'SUCCESS', 'message' : 'Total Rows Count Fetched From "incident_data" Table', 'row_count' : int(records_count)}
+                    log_writer(file_name = 'DB-Data-Count', steps = '04', status = 'SUCCESS', message = f'Total {int(records_count)} Rows Count Fetched From "ritm_data" Table')
+                    return {'status' : 'SUCCESS', 'message' : 'Total Rows Count Fetched From "ritm_data" Table', 'row_count' : int(records_count)}
                 else:
-                    log_writer(file_name = 'DB-Data-Count', steps = '04', status = 'ERROR', message = 'Table "incident_data" Not Present Inside Database')
-                    return {'status' : 'ERROR', 'message' : '"incident_data" Table Not Present Inside Database', 'row_count' : 0}
+                    log_writer(file_name = 'DB-Data-Count', steps = '04', status = 'ERROR', message = 'Table "ritm_data" Not Present Inside Database')
+                    return {'status' : 'ERROR', 'message' : '"ritm_data" Table Not Present Inside Database', 'row_count' : 0}
     except Exception as error:
         log_writer(file_name = 'DB-Data-Count', steps = '04', status = 'ERROR', message = str(error))
         return {'status' : 'ERROR', 'message' : f'[DB-Data-Count:S04] - {str(error)}', 'row_count' : 0}
