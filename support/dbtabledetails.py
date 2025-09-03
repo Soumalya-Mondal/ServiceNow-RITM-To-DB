@@ -60,7 +60,7 @@ def db_table_details(db_name: str, username: str, password: str, db_host: str, d
 
     # define "ritm_data" table create SQL:S05
     try:
-        incident_data_table_create_sql = '''
+        ritm_data_table_create_sql = '''
         CREATE TABLE ritm_data (
             id SERIAL PRIMARY KEY,
             ticket_type TEXT,
@@ -107,7 +107,7 @@ def db_table_details(db_name: str, username: str, password: str, db_host: str, d
     try:
         with psycopg2.connect(**db_connection_parameter) as database_connection: # type: ignore
             with database_connection.cursor() as database_cursor:
-                database_cursor.execute(incident_data_table_create_sql)
+                database_cursor.execute(ritm_data_table_create_sql)
     except Exception as error:
         log_writer(file_name = 'DB-Table-Details', steps = '06', status = 'ERROR', message = str(error))
         return {'status' : 'ERROR', 'message' : f'[DB-Table-Details:S06] - {str(error)}'}

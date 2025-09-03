@@ -31,7 +31,7 @@ def fetch_ticket_details(snow_url: str, username: str, password: str, fetch_offs
             'sysparm_display_value': 'all',
             'sysparm_query': 'ORDERBYsys_created_on',
             'sysparm_exclude_reference_link' : 'true',
-            'sysparm_fields': 'assigned_to,assignment_group,close_code,close_notes,cmdb_ci,company,description,impact,incident_state,number,opened_at,opened_by,parent_incident,priority,resolved_at,resolved_by,severity,short_description,state,sys_class_name,sys_created_by,sys_created_on,sys_id,u_availability_group,u_business_process,u_environment,u_tenant_category,u_tenant_subcategory,u_vendor,urgency,work_notes',
+            'sysparm_fields': 'assigned_to,assignment_group,close_code,close_notes,requested_for,company,description,impact,price,recurring_price,number,opened_at,opened_by,made_sla,priority,closed_at,closed_by,quantity,short_description,state,sys_class_name,sys_created_by,sys_created_on,sys_id,escalation,approval,cat_item,u_tenant_category,u_tenant_subcategory,billable,urgency,work_notes',
             'sysparm_limit' : '10000',
             'sysparm_offset' : str(fetch_offset)
         }
