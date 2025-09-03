@@ -35,7 +35,7 @@ def fetch_ticket_details(snow_url: str, username: str, password: str, fetch_offs
             'sysparm_limit' : '10000',
             'sysparm_offset' : str(fetch_offset)
         }
-        snow_api_url = f'{snow_url}/api/now/table/incident'
+        snow_api_url = f'{snow_url}/api/now/table/sc_req_item'
         log_writer(file_name = 'Fetch-Ticket-Details', steps = '03', status = 'SUCCESS', message = 'ServiceNow Parameter Defined')
     except Exception as error:
         log_writer(file_name = 'Fetch-Ticket-Details', steps = '03', status = 'ERROR', message = str(error))
