@@ -14,3 +14,6 @@ wheels/
 
 # Log file
 *.log
+
+# JSON File
+*.json
